@@ -1,5 +1,23 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import fundo from "../Home_Styles/teste22.png";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 
 export const Wrapper = styled.div`
   position: relative;
@@ -12,6 +30,10 @@ export const Wrapper = styled.div`
 `;
 
 export const Header_Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 400px;
   background-image: url(${fundo});
@@ -19,25 +41,70 @@ export const Header_Wrapper = styled.div`
   background-position: center;
 `;
 
+export const Header_Infos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 50vh;
+  align-items: center;
+  position: relative;
+`;
+
+export const Wrapper_Section_Purpose = styled.div``;
+
+export const Text = styled.p`
+  text-align: center;
+  width: 100vh;
+  font-size: 20px;
+  color: #fff;
+`;
+
 export const Title = styled.h1`
+  width: 100vh;
+  position: absolute;
   text-align: center;
   font-size: 50px;
   margin-bottom: 10px;
+  background-color: transparent;
+  color: #fff;
+  animation: fliptTile 2s;
+
+  @keyframes fliptTile {
+    from {
+      transform: rotateX(90deg);
+    }
+    to {
+      transform: rotateX(0deg);
+    }
+  }
+`;
+
+export const Title_lv2 = styled.h2`
+  text-align: center;
+  font-size: 30px;
+  margin-top: 25px;
+  color: #fff;
 `;
 
 export const Registration_Button = styled.button`
+  position: absolute;
   width: 300px;
   height: 50px;
   border-radius: 5px;
-  font-size: 18px;
-  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 200px;
   margin-bottom: 25px;
   z-index: 1;
+  color: #fff;
+
   &:hover {
     cursor: pointer;
     background-color: #1275b1;
-    color: #fff;
+    color: #000000;
     transition: 2s;
+    font-weight: bold;
+    font-size: 20;
   }
 `;
 
@@ -66,12 +133,23 @@ export const Wrapper_Character = styled.div`
 export const Character_Img = styled.img`
   width: 500px;
   height: 400px;
-
   background-color: transparent;
-
   position: fixed;
   bottom: 0;
   left: 0;
   margin: -10px;
   z-index: 1;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  display: ${(props) => (props.isVisible ? "block" : "none")};
+  pointer-events: ${(props) => (props.isVisible ? "auto" : "none")};
+
+  &:hover {
+    cursor: ${(props) => (props.cursorPointer ? "pointer" : "default")};
+  }
+
+  // Usando animações condicionais com delay
+  animation: ${(props) => (props.isVisible ? fadeIn : "none")} 6s ease-in-out
+      forwards,
+    ${(props) => (!props.isVisible ? fadeOut : "none")} 6s 6s ease-in-out
+      forwards;
 `;
